@@ -3,7 +3,7 @@ package date_calc
 import "time"
 
 type Employee struct {
-	FIO       string
+	FIO       string `uri:"fio" binding:"required"`
 	StartDate *time.Time
 }
 

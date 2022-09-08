@@ -3,20 +3,35 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	date_calc "github.com/m0n7h0ff/date-calc"
 	"github.com/m0n7h0ff/date-calc/pkg/repository"
 	"log"
 	"math"
+	"net/http"
 	"os"
 	"strings"
 	"time"
 )
 
+type Resp struct {
+	Date string
+	Sch  string
+}
+
 func main() {
-	mapOfEmployee := repository.SetEmployeeList()
-	answer := getAnswer(mapOfEmployee)
-	fmt.Println(answer)
-	DoNotCloseTheConsole()
+
+	//answer := getAnswer(mapOfEmployee)
+	//fmt.Println(answer)
+	//DoNotCloseTheConsole()yf
+	r := gin.Default()
+	r.GET("/api/:fio", func(context *gin.Context) {
+		name := context.Param("fio")
+		res := getAnswerByName(name)
+		fmt.Println(res)
+		context.IndentedJSON(http.StatusOK, res)
+	})
+	r.Run(":8080")
 }
 
 func DoNotCloseTheConsole() {
@@ -78,4 +93,29 @@ func getScheduleAnswer(ost float64) string {
 	default:
 		return fmt.Sprint("Дата неверна")
 	}
+}
+
+func getAnswerByName(name string) []Resp {
+	mapOfEmployee := repository.GetEmployeeList()
+	foundEmployee, ok := mapOfEmployee[name]
+	if !ok {
+		log.Fatal("Имени нет")
+	}
+	startDate := *foundEmployee.StartDate
+
+	mapDate := make([]Resp, 0)
+	var daysCount, year, day int
+	var key time.Time
+	var m time.Month
+	for i := 1; i < 31; i++ {
+		daysCount = 24 * i
+		key = time.Now().Add(time.Duration(daysCount) * time.Hour)
+		year, m, day = key.Date()
+		strKey := fmt.Sprintf("%v - %v - %v", day, m, year)
+
+		differenceBetweenDates := getDifferenceBetweenDates(startDate, key)
+		_, fractional := math.Modf(float64(differenceBetweenDates) / 8.0) //остаток
+		mapDate = append(mapDate, Resp{Date: strKey, Sch: getScheduleAnswer(fractional)})
+	}
+	return mapDate
 }
