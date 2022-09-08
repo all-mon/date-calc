@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	date_calc "github.com/m0n7h0ff/date-calc"
 	"log"
 	"math"
 	"os"
@@ -11,32 +12,22 @@ import (
 )
 
 func main() {
-	emp1 := new(Employee)
-	emp1.NewEmployee("Монахов", 2022, 6, 3)
+	mapOfEmployee := setEmployeeList()
+	ReadAndPrint(mapOfEmployee)
+	//что-бы консоль не закрывалась сразу
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	fmt.Println(input)
+}
 
-	emp2 := new(Employee)
-	emp2.NewEmployee("Дубинин", 2022, 6, 5)
-
-	emp3 := new(Employee)
-	emp3.NewEmployee("Тюшняков", 2022, 6, 1)
-
-	emp4 := new(Employee)
-	emp4.NewEmployee("Перехода", 2022, 6, 7)
-
-	mapOfEmployee := make(map[string]Employee)
-
-	mapOfEmployee[emp1.FIO] = *emp1
-	mapOfEmployee[emp2.FIO] = *emp2
-	mapOfEmployee[emp3.FIO] = *emp3
-	mapOfEmployee[emp4.FIO] = *emp4
-
+func ReadAndPrint(mapOfEmployee map[string]date_calc.Employee) {
 	enteredName := readInput("Введите фамилию:\t")
 
 	foundEmployee, ok := mapOfEmployee[enteredName]
 	if !ok {
 		log.Fatal("Имени нет")
 	}
-	startDate := *foundEmployee.start
+	startDate := *foundEmployee.StartDate
 	enteredDate := readInput("Введите дату (формат 2022-06-30):\t")
 
 	parseDate, err := time.Parse("2006-01-02", enteredDate)
@@ -49,20 +40,31 @@ func main() {
 
 	differenceBetweenDates := getDifferenceBetweenDates(startDate, parseDate)
 	_, fractional := math.Modf(float64(differenceBetweenDates) / 8.0) //остаток
-	//fmt.Printf("Раздница в днях: %v, остаток %v", differenceBetweenDates, fractional)
 	fmt.Println()
 	printResult(fractional)
-
-	//2 строки что-бы консоль не закрывалась сразу
-	reader := bufio.NewReader(os.Stdin)
-	input, _ := reader.ReadString('\n')
-	fmt.Println(input)
 }
 
-//func Date(year, month, day int) *time.Time {
-//	date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
-//	return &date
-//}
+func setEmployeeList() map[string]date_calc.Employee {
+	emp1 := new(date_calc.Employee)
+	emp1.NewEmployee("Монахов", 2022, 6, 3)
+
+	emp2 := new(date_calc.Employee)
+	emp2.NewEmployee("Дубинин", 2022, 6, 5)
+
+	emp3 := new(date_calc.Employee)
+	emp3.NewEmployee("Тюшняков", 2022, 6, 1)
+
+	emp4 := new(date_calc.Employee)
+	emp4.NewEmployee("Перехода", 2022, 6, 7)
+
+	mapOfEmployee := make(map[string]date_calc.Employee)
+	mapOfEmployee[emp1.FIO] = *emp1
+	mapOfEmployee[emp2.FIO] = *emp2
+	mapOfEmployee[emp3.FIO] = *emp3
+	mapOfEmployee[emp4.FIO] = *emp4
+
+	return mapOfEmployee
+}
 
 func getDifferenceBetweenDates(startDate time.Time, enteredDate time.Time) int {
 	days := enteredDate.Sub(startDate).Hours() / 24
@@ -82,6 +84,7 @@ func readInput(message string) string {
 	return strings.TrimSpace(input)
 }
 
+//в веб
 func printResult(ost float64) {
 	switch ost {
 	case 0:
