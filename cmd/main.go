@@ -8,15 +8,14 @@ import (
 	"github.com/m0n7h0ff/date-calc/pkg/repository"
 	"log"
 	"math"
-	"net/http"
 	"os"
 	"strings"
 	"time"
 )
 
 type Resp struct {
-	Date string
-	Sch  string
+	Date string `json:"date" binding:"required"`
+	Sch  string `json:"sch" binding:"required"`
 }
 
 func main() {
@@ -28,8 +27,12 @@ func main() {
 	r.GET("/api/:fio", func(context *gin.Context) {
 		name := context.Param("fio")
 		res := getAnswerByName(name)
-		fmt.Println(res)
-		context.IndentedJSON(http.StatusOK, res)
+		//mt.Println(string(res))
+		context.JSON(200, res)
+		//context.JSON(http.StatusOK, gin.H{
+		//	"code":    http.StatusOK,
+		//	"message": string(res), // cast it to string before showing
+		//})
 	})
 	r.Run(":8080")
 }
@@ -44,7 +47,7 @@ func getAnswer(mapOfEmployee map[string]date_calc.Employee) string {
 
 	foundEmployee, ok := mapOfEmployee[enteredName]
 	if !ok {
-		log.Fatal("Имени нет")
+		log.Println("Имени нет")
 	}
 	startDate := *foundEmployee.StartDate
 	enteredDate := readInput("Введите дату (формат 2022-06-30):\t")
@@ -99,7 +102,7 @@ func getAnswerByName(name string) []Resp {
 	mapOfEmployee := repository.GetEmployeeList()
 	foundEmployee, ok := mapOfEmployee[name]
 	if !ok {
-		log.Fatal("Имени нет")
+		log.Println("Имени нет")
 	}
 	startDate := *foundEmployee.StartDate
 
