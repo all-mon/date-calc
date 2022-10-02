@@ -19,20 +19,11 @@ type Resp struct {
 }
 
 func main() {
-
-	//answer := getAnswer(mapOfEmployee)
-	//fmt.Println(answer)
-	//DoNotCloseTheConsole()yf
 	r := gin.Default()
 	r.GET("/api/:fio", func(context *gin.Context) {
 		name := context.Param("fio")
 		res := getAnswerByName(name)
-		//mt.Println(string(res))
 		context.JSON(200, res)
-		//context.JSON(http.StatusOK, gin.H{
-		//	"code":    http.StatusOK,
-		//	"message": string(res), // cast it to string before showing
-		//})
 	})
 	r.Run(":8080")
 }
@@ -97,7 +88,6 @@ func getScheduleAnswer(ost float64) string {
 		return fmt.Sprint("Дата неверна")
 	}
 }
-
 func getAnswerByName(name string) []Resp {
 	mapOfEmployee := repository.GetEmployeeList()
 	foundEmployee, ok := mapOfEmployee[name]
