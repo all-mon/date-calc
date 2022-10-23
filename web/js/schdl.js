@@ -10,7 +10,7 @@ function loadDoc() {
             //console.log(resp[0].sch)
 
             var table = document.getElementById("test");
-            for (var i = 0; i < 30; i++) {
+            for (var i = 0; i < 831; i++) {
                 var tr = document.createElement('tr')
                 for (var j = 0; j < 2; j++) {
                     var td = document.createElement('td')

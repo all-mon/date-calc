@@ -22,7 +22,7 @@ func main() {
 	r := gin.Default()
 	r.GET("/api/:fio", func(context *gin.Context) {
 		name := context.Param("fio")
-		res := getAnswerByName(name)
+		res := getScheduleMonthByLname(name)
 		context.JSON(200, res)
 	})
 	r.Run(":8080")
@@ -70,25 +70,29 @@ func readInput(message string) string {
 	}
 	return strings.TrimSpace(input)
 }
+
+//по остатку от деления определяет смену
 func getScheduleAnswer(ost float64) string {
 	switch ost {
 	case 0:
-		return fmt.Sprint("1-я смена, в день")
+		return fmt.Sprint("1day")
 	case 0.125:
-		return fmt.Sprint("2-я смена, в день")
+		return fmt.Sprint("2day")
 	case 0.75, 0.25:
-		return fmt.Sprint("1й выходной")
+		return fmt.Sprint("1holiday")
 	case 0.375, 0.875:
-		return fmt.Sprint("2й выходной")
+		return fmt.Sprint("2holiday")
 	case 0.5:
-		return fmt.Sprint("1-я смена, в ночь")
+		return fmt.Sprint("1night")
 	case 0.625:
-		return fmt.Sprint("2-я смена, в ночь")
+		return fmt.Sprint("2night")
 	default:
-		return fmt.Sprint("Дата неверна")
+		return fmt.Sprint("Invalid date entered")
 	}
 }
-func getAnswerByName(name string) []Resp {
+
+//Возвращает расписание на месяц по имени сторудника
+func getScheduleMonthByLname(name string) []Resp {
 	mapOfEmployee := repository.GetEmployeeList()
 	foundEmployee, ok := mapOfEmployee[name]
 	if !ok {
@@ -100,7 +104,7 @@ func getAnswerByName(name string) []Resp {
 	var daysCount, year, day int
 	var key time.Time
 	var m time.Month
-	for i := 1; i < 31; i++ {
+	for i := 1; i < 831; i++ {
 		daysCount = 24 * i
 		key = time.Now().Add(time.Duration(daysCount) * time.Hour)
 		year, m, day = key.Date()
