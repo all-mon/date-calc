@@ -1,5 +1,10 @@
 package date_calc
+<<<<<<< HEAD
 //main test br
+=======
+//test
+
+>>>>>>> testing
 import (
 	"context"
 	"net/http"
@@ -23,4 +28,4 @@ func (s *Server) Run(port string, handler http.Handler) error {
 
 func (s *Server) ShutDown(ctx context.Context) error {
 	return s.ShutDown(ctx)
-}
+
