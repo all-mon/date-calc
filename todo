@@ -10,6 +10,8 @@
     git log --oneline --decorate   покажет вам куда указывают указатели веток. Эта опция называется --decorate.
     git checkout testing        переключимся на ветку testing
 	git merge testing		выполнить слияние ветки testing с веткой main
+	git push --set-upstream origin testing - создать ветку на хабе
+
 
 2)привести в порядок существующий код
 3)gin framework - прочитать, разобраться

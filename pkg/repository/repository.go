@@ -1,6 +1,8 @@
 package repository
 
-import date_calc "github.com/m0n7h0ff/date-calc"
+import (
+	date_calc "github.com/m0n7h0ff/date-calc/pkg/entities"
+)
 
 func GetEmployeeList() map[string]date_calc.Employee {
 	emp1 := new(date_calc.Employee)
