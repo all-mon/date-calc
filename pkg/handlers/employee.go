@@ -35,7 +35,6 @@ func getScheduleAnswer(ost float64) string {
 	} else {
 		return fmt.Sprintf("Invalid input data, func getScheduleAnswer(%v)", ost)
 	}
-	return ""
 }
 
 // Возвращает расписание на месяц по имени сторудника
