@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/m0n7h0ff/date-calc/pkg/handlers"
 )
 
 func main() {
+	fmt.Println("Hello")
 	r := gin.Default()
 	r.GET("/api/:fio", func(context *gin.Context) {
 		name := context.Param("fio")
