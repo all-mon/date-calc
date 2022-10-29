@@ -1,4 +1,3 @@
-document.getElementById("test").hidden = true;
 function loadDoc() {
 	document.getElementById("test").hidden = false;
     var x = document.getElementById("myInput").value;
