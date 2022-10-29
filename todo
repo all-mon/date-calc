@@ -11,6 +11,7 @@
     git checkout testing        переключимся на ветку testing
 	git merge testing		выполнить слияние ветки testing с веткой main
 	git push --set-upstream origin testing - создать ветку на хабе
+	git checkout -b [branch] [remotename]/[branch] - забрать ветку с удаленного репозитория
 
 
 2)привести в порядок существующий код +-
