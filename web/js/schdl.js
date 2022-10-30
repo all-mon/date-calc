@@ -1,18 +1,25 @@
-document.getElementById("test").hidden = true;
-function loadDoc() {
-	document.getElementById("test").hidden = false;
-    var x = document.getElementById("myInput").value;
+document.getElementById("schdl_table").hidden = true;
+function loadShndlTable() {
+
+	document.getElementById("schdl_table").hidden = false;
+    for (var i = document.getElementById('schdl_table').getElementsByTagName('tr').length -1; i; i--) {
+            document.getElementById('schdl_table').deleteRow(i);
+        }
+        
+    var x = document.getElementById("search_input").value;
+    
     console.log(x);
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var resp = JSON.parse(xhttp.response);
-            //console.log(JSON.parse(xhttp.response))
+            console.log(JSON.parse(xhttp.response))
             //console.log(resp[0].sch)
+            
 
-            var table = document.getElementById("test");
-            for (var i = 0; i < 831; i++) {
+            var table = document.getElementById("schdl_table");
+            for (var i = 0; i < 30; i++) {
                 var tr = document.createElement('tr')
                 for (var j = 0; j < 2; j++) {
                     var td = document.createElement('td')
