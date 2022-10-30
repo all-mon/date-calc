@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/m0n7h0ff/date-calc/pkg/repository"
 	"log"
 	"math"
 	"time"
+
+	"github.com/m0n7h0ff/date-calc/pkg/repository"
 )
 
 type Resp struct {
@@ -35,7 +36,6 @@ func getScheduleAnswer(ost float64) string {
 	} else {
 		return fmt.Sprintf("Invalid input data, func getScheduleAnswer(%v)", ost)
 	}
-	return ""
 }
 
 // Возвращает расписание на месяц по имени сторудника
@@ -50,7 +50,7 @@ func GetScheduleMonthByLname(name string) []Resp {
 	var daysCount, year, day int
 	var key time.Time
 	var m time.Month
-	for i := 1; i < 831; i++ {
+	for i := 1; i < 31; i++ {
 		daysCount = 24 * i
 		key = time.Now().Add(time.Duration(daysCount) * time.Hour)
 		year, m, day = key.Date()
