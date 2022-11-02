@@ -54,7 +54,7 @@ func GetScheduleMonthByLname(name string) []Resp {
 	for i := 1; i < 366; i++ {
 		daysCount = 24 * i
 		key = time.Now().Add(time.Duration(daysCount) * time.Hour)
-		strKey := key.Format("22/10/22")
+		strKey := key.Format(time.UnixDate)
 		//year, m, day = key.Date()
 		//strKey := fmt.Sprintf("%v - %v - %v", day, m, year)
 
