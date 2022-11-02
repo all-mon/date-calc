@@ -47,14 +47,16 @@ func GetScheduleMonthByLname(name string) []Resp {
 	}
 	startDate := *foundEmployee.StartDate
 	mapDate := make([]Resp, 0)
-	var daysCount, year, day int
+	//var daysCount, year, day int
+	var daysCount int
 	var key time.Time
-	var m time.Month
-	for i := 1; i < 31; i++ {
+	//var m time.Month
+	for i := 1; i < 366; i++ {
 		daysCount = 24 * i
 		key = time.Now().Add(time.Duration(daysCount) * time.Hour)
-		year, m, day = key.Date()
-		strKey := fmt.Sprintf("%v - %v - %v", day, m, year)
+		strKey := key.Format("22/10/22")
+		//year, m, day = key.Date()
+		//strKey := fmt.Sprintf("%v - %v - %v", day, m, year)
 
 		differenceBetweenDates := getDifferenceBetweenDates(startDate, key)
 		_, fractional := math.Modf(float64(differenceBetweenDates) / 8.0) //остаток

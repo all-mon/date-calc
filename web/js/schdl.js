@@ -19,7 +19,7 @@ function loadShndlTable() {
             
 
             var table = document.getElementById("schdl_table");
-            for (var i = 0; i < 30; i++) {
+            for (var i = 0; i < 365; i++) {
                 var tr = document.createElement('tr')
                 for (var j = 0; j < 2; j++) {
                     var td = document.createElement('td')

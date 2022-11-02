@@ -8,6 +8,8 @@ import (
 
 func main() {
 	fmt.Println("Hello")
+	res := handlers.GetScheduleMonthByLname("Монахов")
+	fmt.Println(res[0].Date)
 	r := gin.Default()
 	r.GET("/api/:fio", func(context *gin.Context) {
 		name := context.Param("fio")
