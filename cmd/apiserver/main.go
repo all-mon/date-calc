@@ -1,20 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/m0n7h0ff/date-calc/pkg/handlers"
+	"log"
+
+	"github.com/m0n7h0ff/date-calc/pkg/handler"
 )
 
 func main() {
-	fmt.Println("Hello")
-	res := handlers.GetScheduleMonthByLname("Монахов")
-	fmt.Println(res[0].Date)
-	r := gin.Default()
-	r.GET("/api/:fio", func(context *gin.Context) {
-		name := context.Param("fio")
-		res := handlers.GetScheduleMonthByLname(name)
-		context.JSON(200, res)
-	})
-	r.Run(":8080")
+	handlers := new(handler.Handler)
+	srv := new(config.Server)
+	if err := srv.Run("8000", handlers.InitRoutes()); err != nil {
+		log.Fatalf("error occured while running http server: %s", err.Error())
+	}
+	// r := gin.Default()
+	// r.GET("/api/:fio", func(context *gin.Context) {
+	// 	name := context.Param("fio")
+	// 	res := handlers.GetScheduleMonthByLname(name)
+	// 	context.JSON(200, res)
+	// })
+	// r.Run(":8080")
 }
