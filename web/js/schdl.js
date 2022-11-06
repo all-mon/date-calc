@@ -31,7 +31,7 @@ function loadShndlTable() {
             }
         }
     };
-    xhttp.open("GET", "http://127.0.0.1:8080/api/"+x, true);
+    xhttp.open("GET", "http://127.0.0.1:8080/api/employees/"+x, true);
     xhttp.send();
 }
 
