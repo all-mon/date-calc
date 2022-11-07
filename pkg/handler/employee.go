@@ -48,10 +48,8 @@ func GetScheduleMonthByLname(name string) []Resp {
 	}
 	startDate := *foundEmployee.StartDate
 	mapDate := make([]Resp, 0)
-	//var daysCount, year, day int
 	var daysCount int
 	var key time.Time
-	//var m time.Month
 	for i := 1; i < 366; i++ {
 		daysCount = 24 * i
 		key = time.Now().Add(time.Duration(daysCount) * time.Hour)
