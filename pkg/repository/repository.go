@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/jmoiron/sqlx"
 	date_calc "github.com/m0n7h0ff/date-calc/pkg/entities"
 )
 
@@ -18,7 +19,7 @@ type Repository struct{
 	Employee
 }
 
-func NewRepository() *Repository{
+func NewRepository(db *sqlx.DB) *Repository{
 	return &Repository{}
 }
 
