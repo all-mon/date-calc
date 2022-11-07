@@ -4,6 +4,24 @@ import (
 	date_calc "github.com/m0n7h0ff/date-calc/pkg/entities"
 )
 
+
+type Authorization interface{
+
+}
+
+type Employee interface{
+
+}
+
+type Repository struct{
+	Authorization
+	Employee
+}
+
+func NewRepository() *Repository{
+	return &Repository{}
+}
+
 func GetEmployeeList() map[string]date_calc.Employee {
 	emp1 := new(date_calc.Employee)
 	emp1.NewEmployee("Монахов", 2022, 6, 3)

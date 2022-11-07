@@ -1,8 +1,16 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/m0n7h0ff/date-calc/pkg/service"
+)
 
 type Handler struct {
+	services *service.Service
+}
+
+func NewHandler(services *service.Service) *Handler{
+	return &Handler{services: services}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -12,7 +20,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		employees := api.Group("/employees")
 		{
-			employees.GET("/:fio",h.getEmployeeByLastname)
+			employees.GET("/:fio", h.getEmployeeByLastname)
 		}
 	}
 	return router
