@@ -41,7 +41,7 @@ func getScheduleAnswer(ost float64) string {
 
 // Возвращает расписание на месяц по имени сторудника
 func GetScheduleMonthByLname(name string) []Resp {
-	mapOfEmployee := repository.GetEmployeeList()
+	mapOfEmployee := repository.EmployeePostgres.
 	foundEmployee, ok := mapOfEmployee[name]
 	if !ok {
 		log.Println("Имени нет")

@@ -6,6 +6,7 @@ type Authorization interface {
 }
 
 type Employee interface {
+	
 }
 
 type Service struct {
