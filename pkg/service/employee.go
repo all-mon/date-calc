@@ -13,10 +13,10 @@ func NewEmployeeService(repo repository.Employee) *EmployeeService {
 	return &EmployeeService{repo: repo}
 }
 
-func (s *EmployeeService) GetAllEmployee() []entities.Employee{
+func (s *EmployeeService) GetAllEmployee() []entities.Employee {
 	return s.repo.GetAllEmployee()
 }
 
-func (s *EmployeeService) GetByName(name string) entities.Employee{
+func (s *EmployeeService) GetByName(name string) (entities.Employee, error) {
 	return s.repo.GetByName(name)
 }

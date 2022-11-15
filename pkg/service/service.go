@@ -5,19 +5,17 @@ import (
 	"github.com/m0n7h0ff/date-calc/pkg/repository"
 )
 
-type Authorization interface {
-}
-
 type Employee interface {
 	GetAllEmployee() []entities.Employee
-	GetByName(name string) entities.Employee
+	GetByName(name string) (entities.Employee, error)
 }
 
 type Service struct {
-	Authorization
 	Employee
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{}
+	return &Service{
+		Employee: NewEmployeeService(repos.Employee),
+	}
 }

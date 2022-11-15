@@ -38,13 +38,12 @@ func getScheduleAnswer(ost float64) string {
 }
 
 // Возвращает расписание на месяц по имени сторудника
-func (h *Handler) GetScheduleMonthByLname(name string) []Resp {
-	foundEmployee := h.services.Employee.GetByName(name)
-	// foundEmployee, ok := mapOfEmployee[name]
-	// if !ok {~
-	// 	log.Println("Имени нет")
-	// }
-	
+func (h *Handler) GetScheduleMonthByLname(name string, c *gin.Context) []Resp {
+	foundEmployee, err := h.services.Employee.GetByName(name)
+	if err != nil {
+		c.JSON(404, nil)
+	}
+
 	startDate := *foundEmployee.StartDate
 	mapDate := make([]Resp, 0)
 	var daysCount int
@@ -60,8 +59,8 @@ func (h *Handler) GetScheduleMonthByLname(name string) []Resp {
 	return mapDate
 }
 
-func (h *Handler) getEmployeeByLastname(c *gin.Context){
+func (h *Handler) getEmployeeByLastname(c *gin.Context) {
 	name := c.Param("fio")
-	res := h.GetScheduleMonthByLname(name)
+	res := h.GetScheduleMonthByLname(name, c)
 	c.JSON(200, res)
 }

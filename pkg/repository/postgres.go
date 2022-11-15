@@ -8,6 +8,7 @@ import (
 
 const (
 	employeeTable = "employee"
+	lastname      = "lastname"
 )
 
 type Config struct {
