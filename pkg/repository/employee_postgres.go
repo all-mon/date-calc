@@ -21,3 +21,10 @@ func (r *EmployeePostgres) GetAllEmployee() []entities.Employee {
 	r.db.Select(employees,query)
 	return employees
 }
+
+func (r *EmployeePostgres) GetByName(name string) entities.Employee {
+	var findEmployee entities.Employee
+	query := fmt.Sprintf("SELECT * FROM %s WHERE name = %s ", employeeTable, name)
+	r.db.Select(findEmployee,query)
+	return findEmployee
+}

@@ -12,6 +12,7 @@ type Authorization interface{
 
 type Employee interface{
 	GetAllEmployee() []entities.Employee
+	GetByName(name string) entities.Employee
 }
 
 type Repository struct{

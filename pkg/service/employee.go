@@ -16,3 +16,7 @@ func NewEmployeeService(repo repository.Employee) *EmployeeService {
 func (s *EmployeeService) GetAllEmployee() []entities.Employee{
 	return s.repo.GetAllEmployee()
 }
+
+func (s *EmployeeService) GetByName(name string) entities.Employee{
+	return s.repo.GetByName(name)
+}
