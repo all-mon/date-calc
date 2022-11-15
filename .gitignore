@@ -3,5 +3,5 @@
 todo.bak
 *.exe
 *.vscode
-__debug_bin /.vscode *.exe
 *__
+*__debug_bin

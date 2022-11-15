@@ -41,7 +41,7 @@ func getScheduleAnswer(ost float64) string {
 func (h *Handler) GetScheduleMonthByLname(name string) []Resp {
 	foundEmployee := h.services.Employee.GetByName(name)
 	// foundEmployee, ok := mapOfEmployee[name]
-	// if !ok {
+	// if !ok {~
 	// 	log.Println("Имени нет")
 	// }
 	
