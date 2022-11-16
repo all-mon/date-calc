@@ -9,7 +9,7 @@ type Handler struct {
 	services *service.Service
 }
 
-func NewHandler(services *service.Service) *Handler{
+func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
@@ -20,7 +20,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		employees := api.Group("/employees")
 		{
-			employees.GET("/:fio", h.getEmployeeByLastname)
+			employees.GET("/:lastname", h.getEmployeeByLastname)
 		}
 	}
 	return router

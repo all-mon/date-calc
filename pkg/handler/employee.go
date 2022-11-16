@@ -13,28 +13,10 @@ type Resp struct {
 	Sch  string `json:"sch" binding:"required"`
 }
 
-func getDifferenceBetweenDates(startDate time.Time, enteredDate time.Time) int {
-	days := enteredDate.Sub(startDate).Hours() / 24
-	return int(days)
-}
-
-// по остатку от деления определяет смену
-func getScheduleAnswer(ost float64) string {
-	var shndl = map[float64]string{
-		0:     "1day",
-		0.125: "2day",
-		0.75:  "1holiday",
-		0.25:  "1holiday",
-		0.375: "2holiday",
-		0.875: "2holiday",
-		0.5:   "1night",
-		0.625: "2night",
-	}
-	if v, ok := shndl[ost]; ok {
-		return v
-	} else {
-		return fmt.Sprintf("Invalid input data, func getScheduleAnswer(%v)", ost)
-	}
+func (h *Handler) getEmployeeByLastname(c *gin.Context) {
+	name := c.Param("lastname")
+	res := h.GetScheduleMonthByLname(name, c)
+	c.JSON(200, res)
 }
 
 // Возвращает расписание на месяц по имени сторудника
@@ -59,8 +41,26 @@ func (h *Handler) GetScheduleMonthByLname(name string, c *gin.Context) []Resp {
 	return mapDate
 }
 
-func (h *Handler) getEmployeeByLastname(c *gin.Context) {
-	name := c.Param("fio")
-	res := h.GetScheduleMonthByLname(name, c)
-	c.JSON(200, res)
+func getDifferenceBetweenDates(startDate time.Time, enteredDate time.Time) int {
+	days := enteredDate.Sub(startDate).Hours() / 24
+	return int(days)
+}
+
+// по остатку от деления определяет смену
+func getScheduleAnswer(ost float64) string {
+	var shndl = map[float64]string{
+		0:     "1day",
+		0.125: "2day",
+		0.75:  "1holiday",
+		0.25:  "1holiday",
+		0.375: "2holiday",
+		0.875: "2holiday",
+		0.5:   "1night",
+		0.625: "2night",
+	}
+	if v, ok := shndl[ost]; ok {
+		return v
+	} else {
+		return fmt.Sprintf("Invalid input data, func getScheduleAnswer(%v)", ost)
+	}
 }
