@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/m0n7h0ff/date-calc/pkg/service"
+	"net/http"
 )
 
 type Handler struct {
@@ -15,6 +16,9 @@ func NewHandler(services *service.Service) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
+	router.LoadHTMLGlob("templates/*")
+	//fileServer := http.FileServer(http.Dir("./ui/static/"))
+	router.StaticFS("/static/", http.Dir("static/"))
 
 	api := router.Group("/api")
 	{
@@ -22,6 +26,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			employees.GET("/:lastname", h.getEmployeeByLastname)
 		}
+	}
+	employees := router.Group("/employees")
+	{
+		employees.GET("/schedule", h.getSchedule)
 	}
 	return router
 }

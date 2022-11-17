@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"math"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,13 @@ import (
 type Resp struct {
 	Date string `json:"date" binding:"required"`
 	Sch  string `json:"sch" binding:"required"`
+}
+
+func (h *Handler) getSchedule(c *gin.Context) {
+	c.HTML(http.StatusOK, "schendule_person.tmpl.html", gin.H{
+		"Title": "Hello",
+	})
+
 }
 
 func (h *Handler) getEmployeeByLastname(c *gin.Context) {

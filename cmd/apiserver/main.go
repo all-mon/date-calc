@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-	"os"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/m0n7h0ff/date-calc/config"
@@ -10,9 +8,12 @@ import (
 	"github.com/m0n7h0ff/date-calc/pkg/repository"
 	"github.com/m0n7h0ff/date-calc/pkg/service"
 	"github.com/spf13/viper"
+	"log"
+	"os"
 )
 
 func main() {
+
 	if err := initConfig(); err != nil {
 		log.Fatalf("error initConfig: %s", err.Error())
 	}
