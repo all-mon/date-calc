@@ -19,6 +19,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.LoadHTMLGlob("templates/*")
 	//fileServer := http.FileServer(http.Dir("./ui/static/"))
 	router.StaticFS("/static/", http.Dir("static/"))
+	router.GET("/upload", h.uploadForm)
+	router.POST("upload", h.upload)
 
 	api := router.Group("/api")
 	{
