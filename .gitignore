@@ -3,5 +3,6 @@
 todo.bak
 *.exe
 *.vscode
+*.pdf
 *__
 *__debug_bin
