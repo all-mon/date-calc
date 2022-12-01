@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	"github.com/m0n7h0ff/date-calc/config"
 	"github.com/m0n7h0ff/date-calc/pkg/handler"
 	"github.com/m0n7h0ff/date-calc/pkg/repository"
 	"github.com/m0n7h0ff/date-calc/pkg/service"
@@ -39,12 +38,13 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	//настройка сервера, почитать
-	srv := new(config.Server)
+	srv := new(Server)
 	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occured while running http server: %s", err.Error())
 	}
 }
-//получаем данные из файла конфигурации
+
+// получаем данные из файла конфигурации
 func initConfig() error {
 	viper.AddConfigPath("config")
 	viper.SetConfigName("config")

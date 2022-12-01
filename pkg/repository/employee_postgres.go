@@ -15,18 +15,21 @@ func NewEmployeePostgres(db *sqlx.DB) *EmployeePostgres {
 	return &EmployeePostgres{db: db}
 }
 
-func (r *EmployeePostgres) GetAllEmployee() []entities.Employee {
+func (r *EmployeePostgres) GetAllEmployee() ([]entities.Employee, error) {
 	var employees []entities.Employee
-	query := fmt.Sprintf("SELECT * FROM %s", employeeTable)
-	r.db.Select(employees, query)
-	return employees
+	query := fmt.Sprintf("SELECT * FROM"+" %s", employeeTable)
+	err := r.db.Select(employees, query)
+	if err != nil {
+		return nil, err
+	}
+	return employees, nil
 }
 
-func (r *EmployeePostgres) GetByName(name string) (entities.Employee, error) {
+func (r *EmployeePostgres) GetByLastName(lastname string) (entities.Employee, error) {
 	findEmployee := entities.Employee{}
-	query := fmt.Sprintf("SELECT lastname, startdate FROM %s WHERE lastname = $1 ", employeeTable)
+	query := fmt.Sprintf("SELECT lastname, startdate FROM"+" %s WHERE lastname = $1 ", employeeTable)
 	fmt.Println(query)
-	err := r.db.Get(&findEmployee, query, name)
+	err := r.db.Get(&findEmployee, query, lastname)
 	if err != nil {
 		fmt.Println(err.Error())
 		return findEmployee, err

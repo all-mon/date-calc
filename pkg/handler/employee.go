@@ -9,33 +9,35 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Resp struct {
-	Date string `json:"date" binding:"required"`
-	Sch  string `json:"sch" binding:"required"`
+type ScheduleResponse struct {
+	Date         string `json:"date" binding:"required"`
+	WorkingShift string `json:"working_shift" binding:"required"`
 }
 
+// страница с расписанием смен
 func (h *Handler) getSchedule(c *gin.Context) {
-	c.HTML(http.StatusOK, "schendule_person.tmpl.html", gin.H{
+	c.HTML(http.StatusOK, "schedule_person.tmpl.html", gin.H{
 		"Title": "Hello",
 	})
 
 }
 
+// handler, возвращает ответ ScheduleResponse struct, в формате json [Дата: х, Рабочая смена: х]
 func (h *Handler) getEmployeeByLastname(c *gin.Context) {
 	name := c.Param("lastname")
-	res := h.GetScheduleMonthByLname(name, c)
+	res := h.GetScheduleMonthByLastName(name, c)
 	c.JSON(200, res)
 }
 
-// Возвращает расписание на месяц по имени сторудника
-func (h *Handler) GetScheduleMonthByLname(name string, c *gin.Context) []Resp {
-	foundEmployee, err := h.services.Employee.GetByName(name)
+// GetScheduleMonthByLastName функция возвращает расписание на месяц по имени сторудника
+func (h *Handler) GetScheduleMonthByLastName(lastname string, c *gin.Context) []ScheduleResponse {
+	foundEmployee, err := h.services.Employee.GetByLastName(lastname)
 	if err != nil {
 		c.JSON(404, nil)
 	}
 
 	startDate := *foundEmployee.StartDate
-	mapDate := make([]Resp, 0)
+	mapDate := make([]ScheduleResponse, 0)
 	var daysCount int
 	var key time.Time
 	for i := 1; i < 366; i++ {
@@ -44,7 +46,7 @@ func (h *Handler) GetScheduleMonthByLname(name string, c *gin.Context) []Resp {
 		strKey := key.Format("2006/01/02")
 		differenceBetweenDates := getDifferenceBetweenDates(startDate, key)
 		_, fractional := math.Modf(float64(differenceBetweenDates) / 8.0) //остаток
-		mapDate = append(mapDate, Resp{Date: strKey, Sch: getScheduleAnswer(fractional)})
+		mapDate = append(mapDate, ScheduleResponse{Date: strKey, WorkingShift: getScheduleAnswer(fractional)})
 	}
 	return mapDate
 }

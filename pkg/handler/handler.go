@@ -14,23 +14,23 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
+// InitRoutes настройка Gin роутера(uri, файловый сервер, папка с шаблонами )
 func (h *Handler) InitRoutes() *gin.Engine {
 	//settings
 	router := gin.New()
 	router.LoadHTMLGlob("templates/*")
 	router.StaticFS("/static/", http.Dir("static/"))
 
-	//handlers
+	//view handlers
 	router.GET("/upload", h.uploadForm)
 	router.POST("/upload", h.upload)
 
-	//view
 	employees := router.Group("/employees")
 	{
 		employees.GET("/schedule", h.getSchedule)
 	}
 
-	//api
+	//api handlers
 	api := router.Group("/api")
 	{
 		employees := api.Group("/employees")

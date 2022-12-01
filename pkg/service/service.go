@@ -6,8 +6,8 @@ import (
 )
 
 type Employee interface {
-	GetAllEmployee() []entities.Employee
-	GetByName(name string) (entities.Employee, error)
+	GetAllEmployee() ([]entities.Employee, error)
+	GetByLastName(lastname string) (entities.Employee, error)
 }
 
 type Service struct {

@@ -1,30 +1,30 @@
 document.getElementById("schdl_table").hidden = true;
-function loadShndlTable() {
+function loadScheduleTable() {
 
 	document.getElementById("schdl_table").hidden = false;
-    for (var i = document.getElementById('schdl_table').getElementsByTagName('tr').length -1; i; i--) {
+    for (let i = document.getElementById('schdl_table').getElementsByTagName('tr').length -1; i; i--) {
             document.getElementById('schdl_table').deleteRow(i);
         }
-        
-    var x = document.getElementById("search_input").value;
-    
+
+    let x = document.getElementById("search_input").value;
+
     console.log(x);
-    var xhttp = new XMLHttpRequest();
+    let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var resp = JSON.parse(xhttp.response);
+        if (this.readyState === 4 && this.status === 200) {
+            let resp = JSON.parse(xhttp.response);
             console.log(JSON.parse(xhttp.response))
-            //console.log(resp[0].sch)
+            console.log(resp[0].working_shift)
             
 
-            var table = document.getElementById("schdl_table");
-            for (var i = 0; i < 365; i++) {
-                var tr = document.createElement('tr')
-                for (var j = 0; j < 2; j++) {
-                    var td = document.createElement('td')
+            let table = document.getElementById("schdl_table");
+            for (let i = 0; i < 365; i++) {
+                let tr = document.createElement('tr')
+                for (let j = 0; j < 2; j++) {
+                    let td = document.createElement('td')
                     if (j === 0) td.innerHTML = resp[i].date;
-                    else if (j === 1) td.innerHTML = resp[i].sch;
+                    else if (j === 1) td.innerHTML = resp[i].working_shift;
                     tr.appendChild(td)
                 }
                 table.appendChild(tr)
