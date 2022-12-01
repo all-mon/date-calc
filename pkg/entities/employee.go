@@ -4,7 +4,8 @@ import (
 	"time"
 )
 
+// Employee зачем uri, db, binding ?
 type Employee struct {
-	FIO       string     `uri:"fio" db:"lastname" binding:"required"`
+	Lastname  string     `uri:"lastname" db:"lastname" binding:"required"`
 	StartDate *time.Time `db:"startdate"`
 }

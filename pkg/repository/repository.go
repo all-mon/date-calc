@@ -5,7 +5,7 @@ import (
 	"github.com/m0n7h0ff/date-calc/pkg/entities"
 )
 
-type Authorization interface {
+type Device interface {
 }
 
 type Employee interface {
@@ -14,7 +14,6 @@ type Employee interface {
 }
 
 type Repository struct {
-	Authorization
 	Employee
 }
 

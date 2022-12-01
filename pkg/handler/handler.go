@@ -15,23 +15,28 @@ func NewHandler(services *service.Service) *Handler {
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
+	//settings
 	router := gin.New()
 	router.LoadHTMLGlob("templates/*")
-	//fileServer := http.FileServer(http.Dir("./ui/static/"))
 	router.StaticFS("/static/", http.Dir("static/"))
-	router.GET("/upload", h.uploadForm)
-	router.POST("upload", h.upload)
 
+	//handlers
+	router.GET("/upload", h.uploadForm)
+	router.POST("/upload", h.upload)
+
+	//view
+	employees := router.Group("/employees")
+	{
+		employees.GET("/schedule", h.getSchedule)
+	}
+
+	//api
 	api := router.Group("/api")
 	{
 		employees := api.Group("/employees")
 		{
 			employees.GET("/:lastname", h.getEmployeeByLastname)
 		}
-	}
-	employees := router.Group("/employees")
-	{
-		employees.GET("/schedule", h.getSchedule)
 	}
 	return router
 }
